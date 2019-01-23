@@ -9,19 +9,6 @@ sap.ui.define([
 			var oRouter = this.getRouter();
 
 			oRouter.getRoute("employee").attachMatched(this._onRouteMatched, this);
-
-			// Hint: we don't want to do it this way
-			/*
-			 oRouter.attachRouteMatched(function (oEvent){
-				 var sRouteName, oArgs, oView;
-
-				 sRouteName = oEvent.getParameter("name");
-				 if (sRouteName === "employee"){
-				 	this._onRouteMatched(oEvent);
-				 }
-			 }, this);
-			 */
-
 		},
 
 		_onRouteMatched : function (oEvent) {
