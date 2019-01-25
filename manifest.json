@@ -1,23 +1,13 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "sap.ui.demo.nav",
+		"id": "sap.ui.demo.db",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "1.0.0"
-		},
-		"dataSources": {
-			"employeeRemote": {
-				"uri": "/here/goes/your/serviceUrl/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0",
-					"localUri" : "localService/metadata.xml"
-				}
-			}
 		}
 	},
 	"sap.ui": {
@@ -30,7 +20,7 @@
   	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.ui.demo.nav.view.App",
+			"viewName": "sap.ui.demo.db.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -46,48 +36,54 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "sap.ui.demo.nav.i18n.i18n"
+					"bundleName": "sap.ui.demo.db.i18n.i18n"
 				}
 			},
-			"": {
-				"dataSource": "employeeRemote"
+			"people": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "https://services.odata.org/TripPinRESTierService/(S(pbifwq4mabylls1sbsykc25r))/People"
 			}
-		},
-		"routing": {
-			"config": {
-				"routerClass": "sap.m.routing.Router",
-				"viewType": "XML",
-				"viewPath": "sap.ui.demo.nav.view",
-				"controlId": "app",
-				"controlAggregation": "pages",
-				"transition": "slide",
-				"bypassed": {
-					"target": "notFound"
-				},
-				"async": true
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "appHome",
-				"target": "empl"
-			}, {
-				"pattern": "employees/{employeeId}",
-				"name": "employee",
-				"target": "employee"
-			}],
-			"targets": {
-				"empl": {
-					"viewId": "employeeList",
-					"viewPath": "sap.ui.demo.nav.view.employee",
-					"viewName": "EmployeeList",
-					"viewLevel" : 1
-				},
-				"employee": {
-					"viewId": "employee",
-					"viewName": "employee.Employee",
-					"viewLevel" : 3
-				}
-			}
+            "routing": {
+               "config": {
+                  "routerClass": "sap.m.routing.Router",
+                  "viewType": "XML",
+                  "viewPath": "sap.ui.demo.db.view",
+                  "controlId": "app",
+                  "controlAggregation": "pages",
+                  "transition": "slide",
+                  "async": true
+               },
+               "routes": [{
+                  "pattern": "",
+                  "name": "appHome",
+						"target": "home"
+					},
+					{
+					"pattern": "detail",
+					"name": "detail",
+					"target": "detail"
+					},		
+					{
+						"pattern": "detail/{invoicePath}",
+						"name": "detail",
+						"target": "detail"
+					 }
+],
+               "targets": {
+                  "home": {
+                     "viewId": "home",
+                     "viewName": "App",
+                     "viewLevel" : 1
+                  },
+						"detail": {
+						"viewId": "detail",
+						"viewName": "Detail",
+						"viewPath": "sap.ui.demo.db.view",
+						"transition": "show",
+						"viewLevel" : 2
+					}
+               }
+            }
 		}
-	}
 }
